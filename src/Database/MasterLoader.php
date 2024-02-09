@@ -12,7 +12,7 @@ trait MasterLoader
     {
         $directory = property_exists($this, 'masterPath') ? $this->masterPath : 'master';
 
-        $path = implode(DIRECTORY_SEPARATOR, array_filter([__DIR__, $directory, "$table.json"]));
+        $path = implode(DIRECTORY_SEPARATOR, array_filter([database_path("Seeders\\$directory"), "$table.json"]));
         $data = file_get_contents($path);
         $json = json_decode($data, true);
 
