@@ -6,6 +6,18 @@
     "autoload": {
         "psr-4": {
             "BangLipai\\Utility\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "banglipai\\ServiceProvider",
+                "banglipai\\MigrationServiceProvider",
+                "banglipai\\ResponseServiceProvider"
+            ]
         }
     },
     "authors": [
