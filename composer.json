@@ -11,6 +11,11 @@
             "src/helpers.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "BangLipai\\Tests\\": "tests/"
+        }
+    },
     "extra": {
         "laravel": {
             "providers": [
