@@ -14,9 +14,9 @@
     "extra": {
         "laravel": {
             "providers": [
-                "banglipai\\ServiceProvider",
-                "banglipai\\MigrationServiceProvider",
-                "banglipai\\ResponseServiceProvider"
+                "BangLipai\\Utility\\ServiceProvider",
+                "BangLipai\\Utility\\MigrationServiceProvider",
+                "BangLipai\\Utility\\ResponseServiceProvider"
             ]
         }
     },
