@@ -5,7 +5,7 @@ namespace BangLipai\Utility\Test;
 use BangLipai\Utility\ServiceProvider;
 use BangLipai\Utility\Test\Trait\LazilyRefreshDatabase;
 use BangLipai\Utility\Test\Trait\LogRequest;
-use Orchestra\Testbench\TestCase as BaseTestCase;
+use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 
 abstract class TestCase extends BaseTestCase
 {
