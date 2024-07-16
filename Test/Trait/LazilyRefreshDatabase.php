@@ -1,6 +1,6 @@
 <?php
 
-namespace BangLipai\Utility\Test;
+namespace BangLipai\Test\Trait;
 
 use Illuminate\Foundation\Testing\RefreshDatabase as BaseTrait;
 use Illuminate\Foundation\Testing\RefreshDatabaseState;

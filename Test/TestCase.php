@@ -1,28 +1,33 @@
 <?php
 
-namespace Banglipai\Test;
+namespace BangLipai\Test;
 
-use Banglipai\Utility\ServiceProvider;
+use BangLipai\Test\Trait\LazilyRefreshDatabase;
+use BangLipai\Test\Trait\LogRequest;
+use BangLipai\Utility\ServiceProvider;
 use Orchestra\Testbench\TestCase as BaseTestCase;
 
-class TestCase extends BaseTestCase
+abstract class TestCase extends BaseTestCase
 {
-    public function setUp(): void
-    {
-        parent::setUp();
+   use LazilyRefreshDatabase;
+   use LogRequest;
 
-        // additional setup
-    }
+   public function setUp(): void
+   {
+      parent::setUp();
 
-    protected function getPackageProviders($app): array
-    {
-        return [
-            ServiceProvider::class,
-        ];
-    }
+      // additional setup
+   }
 
-    protected function getEnvironmentSetUp($app)
-    {
-        // perform environment setup
-    }
+   protected function getPackageProviders($app): array
+   {
+      return [
+         ServiceProvider::class,
+      ];
+   }
+
+   protected function getEnvironmentSetUp($app)
+   {
+      // perform environment setup
+   }
 }
