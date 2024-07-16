@@ -1,6 +1,6 @@
 <?php
 
-namespace BangLipai\Test\Trait;
+namespace BangLipai\Utility\Test\Trait;
 
 use Illuminate\Foundation\Http\Events\RequestHandled;
 use Illuminate\Foundation\Testing\TestCase;
