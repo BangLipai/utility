@@ -21,7 +21,7 @@ class MigrationServiceProvider extends BaseServiceProvider
 
         Blueprint::macro('master', function (string $name): ColumnDefinition {
             /** @var Blueprint $this */
-            return $this->dateTime("k_$name");
+            return $this->unsignedTinyInteger("k_$name");
         });
 
         Blueprint::macro('wkt', function (string $name): ColumnDefinition {
