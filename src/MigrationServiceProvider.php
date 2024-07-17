@@ -3,7 +3,7 @@
 namespace BangLipai\Utility;
 
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Arr;
+use Illuminate\Database\Schema\ColumnDefinition;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class MigrationServiceProvider extends BaseServiceProvider
@@ -13,20 +13,30 @@ class MigrationServiceProvider extends BaseServiceProvider
      */
     public function register(): void
     {
-        Blueprint::macro('masterColumn', function (int $singkat = 50, int $keterangan = 100, array $nullable = []) {
+        Blueprint::macro('masterColumn', function (int $singkat = 9, int $keterangan = 50, bool $nullable = true) {
             /** @var Blueprint $this */
-            $table = $this;
+            $this->string('singkat', $singkat)->nullable($nullable);
+            $this->string('keterangan', $keterangan)->nullable();
+        });
 
-            $nullSingkat    = (bool)Arr::get($nullable, 'singkat', false);
-            $nullKeterangan = (bool)Arr::get($nullable, 'keterangan', false);
+        Blueprint::macro('master', function (string $name): ColumnDefinition {
+            /** @var Blueprint $this */
+            return $this->dateTime("k_$name");
+        });
 
-            $table->string('singkat', $singkat)
-                ->nullable($nullSingkat);
+        Blueprint::macro('wkt', function (string $name): ColumnDefinition {
+            /** @var Blueprint $this */
+            return $this->dateTime("wkt_$name");
+        });
 
-            $table->string('keterangan', $keterangan)
-                ->nullable($nullKeterangan);
+        Blueprint::macro('tgl', function (string $name): ColumnDefinition {
+            /** @var Blueprint $this */
+            return $this->date("tgl_$name");
+        });
 
-            return $this;
+        Blueprint::macro('is', function (string $name): ColumnDefinition {
+            /** @var Blueprint $this */
+            return $this->char("is_$name", 1);
         });
     }
 
