@@ -51,3 +51,10 @@ if (!function_exists('routeActive')) {
         return request()->routeIs($routeName) ? 'active' : '';
     }
 }
+
+if (!function_exists('merge')) {
+    function merge(...$arrays): array
+    {
+        return array_merge(...$arrays);
+    }
+}
