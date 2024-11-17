@@ -50,57 +50,37 @@ class ServiceProvider extends BaseServiceProvider
             $logger->pushHandler(new StreamHandler("php://stdout"));
         }
 
-        Event::listen(function (Events\QueryExecuted $event) {
+        Event::listen(function(Events\QueryExecuted $event) {
             if (!config('app.debug')) {
                 return;
             }
 
-            $bindings = [];
-            foreach ($event->bindings as $binding) {
-                if ($binding instanceof DateTime) {
-                    $bindings[] = "'{$binding->format('Y-m-d H:i:s')}'";
-                    continue;
-                }
-
-                if (is_object($binding)) {
-                    try {
-                        $bindings[] = "'$binding'";
-                        continue;
-                    } catch (Throwable $e) {
-                    }
-                }
-
-                $bindings[] = var_export($binding, true);
-            }
-
-            $query = str_replace(['%', '?'], ['%%', '%s'], $event->sql);
-
-            if (count($bindings) > 0) {
-                $query = vsprintf($query, $bindings);
-            }
+            $query = $event->connection
+                ->getQueryGrammar()
+                ->substituteBindingsIntoRawSql($event->sql, $event->bindings);
 
             Log::debug("$event->connectionName - $query");
         });
 
-        Event::listen(function (Events\TransactionBeginning $event) {
+        Event::listen(function(Events\TransactionBeginning $event) {
             if (config('app.debug')) {
                 Log::debug("$event->connectionName - begin");
             }
         });
 
-        Event::listen(function (Events\TransactionCommitted $event) {
+        Event::listen(function(Events\TransactionCommitted $event) {
             if (config('app.debug')) {
                 Log::debug("$event->connectionName - committed");
             }
         });
 
-        Event::listen(function (Events\TransactionCommitting $event) {
+        Event::listen(function(Events\TransactionCommitting $event) {
             if (config('app.debug')) {
                 Log::debug("$event->connectionName - committing");
             }
         });
 
-        Event::listen(function (Events\TransactionRolledBack $event) {
+        Event::listen(function(Events\TransactionRolledBack $event) {
             if (config('app.debug')) {
                 Log::debug("$event->connectionName - rollback");
             }
