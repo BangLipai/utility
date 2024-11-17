@@ -12,6 +12,14 @@ class ResponseServiceProvider extends BaseServiceProvider
     public function boot(): void
     {
         Response::macro('format', function($data, int|null $code, array|null $meta): array {
+            if ($data instanceof AbstractPaginator) {
+                $data = $data->toArray();
+
+                $meta = array_merge($data, $meta ?: []);
+                $data = $meta['data'];
+                unset($meta['data']);
+            }
+
             $res = array_filter([
                 'data' => $data,
                 'code' => $code,
@@ -34,7 +42,7 @@ class ResponseServiceProvider extends BaseServiceProvider
             ], Response::format($data, $code, $meta));
         });
 
-        Response::macro('formatFailure', function(string|null $message, $data, int|null $code, array|null $meta): array {
+        Response::macro('formatError', function(string|null $message, $data, int|null $code, array|null $meta): array {
             return array_merge([
                 'success' => false,
             ], array_filter([
@@ -48,7 +56,7 @@ class ResponseServiceProvider extends BaseServiceProvider
         });
 
         Response::macro('error', function($message = null, $data = null, int $status = 500, int $code = null, array $meta = null): JsonResponse {
-            $res = Response::formatFailure($message, $data, $code, $meta);
+            $res = Response::formatError($message, $data, $code, $meta);
             return Response::json($res, $status);
         });
 
@@ -63,7 +71,7 @@ class ResponseServiceProvider extends BaseServiceProvider
         });
 
         TestResponse::macro('assertError', function($message = null, $data = null, int $status = 500, int $code = null, array $meta = null): TestResponse {
-            $res = Response::formatFailure($message, $data, $code, $meta);
+            $res = Response::formatError($message, $data, $code, $meta);
 
             /** @var $this TestResponse */
             $this->assertStatus($status)
