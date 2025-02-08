@@ -13,12 +13,12 @@ abstract class BaseException extends Exception
     protected int $status = 500;
 
     public function __construct(
-        string               $message = "",
-        int                  $code = 0,
-        protected mixed      $data = null,
-        protected array|null $meta = null,
-        int|null             $status = null,
-        ?Throwable           $previous = null,
+        string           $message = "",
+        int              $code = 0,
+        protected mixed  $data = null,
+        protected ?array $meta = null,
+        ?int             $status = null,
+        ?Throwable       $previous = null,
     ) {
         parent::__construct($message, $code ?: $status ?: $this->status, $previous);
 

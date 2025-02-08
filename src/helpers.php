@@ -4,14 +4,14 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 
 if (!function_exists('success')) {
-    function success($data = null, $status = 200, $code = null, $meta = null): JsonResponse
+    function success(mixed $data = null, $status = 200, mixed $code = null, mixed $meta = null): JsonResponse
     {
         return Response::success($data, $status, $code, $meta);
     }
 }
 
 if (!function_exists('error')) {
-    function error($message = null, $data = null, int $status = 500, int $code = null, array $meta = null): JsonResponse
+    function error(mixed $message = null, mixed $data = null, int $status = 500, ?int $code = null, ?array $meta = null): JsonResponse
     {
         return Response::error($message, $data, $status, $code, $meta);
     }
